@@ -7,12 +7,7 @@ export default function Logo() {
     <Box mt="0">
       <Link href="/">
         <a>
-          <Image
-            src="/../public/logo.svg"
-            alt="Just Decide"
-            width={100}
-            height={67}
-          />
+          <Image src="/logo.svg" alt="Just Decide" width={100} height={67} />
         </a>
       </Link>
     </Box>
