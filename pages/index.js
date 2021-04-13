@@ -1,15 +1,9 @@
-import { supabase } from "../lib/initSupabase";
-import { Auth } from "@supabase/ui";
-import CreateVote from "../components/CreateTopic";
-import { Button } from "@chakra-ui/react";
-import { addTopic } from "../lib/TopicsDao";
+import CreateTopic from "../components/CreateTopic";
 
-export default function IndexPage() {
-  const { user } = Auth.useUser();
-
+export default function IndexPage({ user }) {
   return (
     <div>
-      <CreateVote user={supabase.auth.user()} addTopic={addTopic} />
+      <CreateTopic userId={user.id} />
     </div>
   );
 }
