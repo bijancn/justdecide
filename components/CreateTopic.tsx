@@ -11,17 +11,21 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { useRouter } from "next/router";
+import { addTopic } from "../lib/TopicsDao";
 
-export default function CreateTopic({ user, addTopic }) {
+interface CreateTopicProps {
+  userId: string;
+}
+
+export default function CreateTopic(props: CreateTopicProps) {
   const router = useRouter();
   return (
     <div>
       <Formik
         initialValues={{ topic: "" }}
-        onSubmit={(formValue, actions) => {
-          addTopic(user, formValue.topic);
+        onSubmit={async (formValue, actions) => {
+          const id = await addTopic(props.userId, formValue.topic);
           actions.setSubmitting(false);
-          const id = 1;
           router.push(`/topics/${encodeURIComponent(id)}`);
         }}
       >
