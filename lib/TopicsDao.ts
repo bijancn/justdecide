@@ -1,12 +1,12 @@
 import { supabase } from "./initSupabase";
 
 export interface Topic {
-  title: string
-  id: number
-  created_at: string
-  author: string
-  started_at: string
-  end_at: string
+  title: string;
+  id: number;
+  created_at: string;
+  author: string;
+  started_at: string;
+  end_at: string;
 }
 
 export async function fetchTopic(id: number): Promise<Topic> {
@@ -15,23 +15,39 @@ export async function fetchTopic(id: number): Promise<Topic> {
     .select("*")
     .eq("id", id)
     .single();
-  if (error) {
-    console.log("error", error);
-    // TODO: Error handling? "Oops Page"
-  } else
-    return result;
+  return handleError(result, error);
 }
 
-export async function addTopic(userId: string, topicTitle: string): Promise<Topic> {
+export async function addTopic(
+  userId: string,
+  topicTitle: string
+): Promise<Topic> {
   let topicTextTrimmed = topicTitle.trim();
   let { data: result, error } = await supabase
     .from("topics")
     .insert({ title: topicTextTrimmed, author: userId })
     .single();
+  return handleError(result, error);
+}
+
+function handleError<T>(result: T, error: any): T {
   if (error) {
     console.log("error", error);
     // TODO: Error handling? "Oops Page"
   } else {
     return result;
   }
+}
+
+export async function updateTopic(
+  id: number,
+  start: string,
+  end: string
+): Promise<Topic> {
+  let { data: result, error } = await supabase
+    .from("topics")
+    .update({ started_at: start, end_at: end })
+    .eq("id", id)
+    .single();
+  return handleError(result, error);
 }
