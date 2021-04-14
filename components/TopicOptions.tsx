@@ -10,8 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { addOptions } from "../lib/OptionsDao";
-import { Topic } from "../lib/TopicsDao";
+import { Topic, updateTopic } from "../lib/TopicsDao";
 import React from "react";
+import { DateTime } from "luxon";
 
 const initialValues = {
   options: [
@@ -24,9 +25,14 @@ const initialValues = {
   ],
 };
 
-const sendOptions = async (userId, topicId, values) => {
+const publishTopic = async (userId, topicId, values) => {
   await new Promise((r) => setTimeout(r, 500));
   const result = await addOptions(userId, topicId, values);
+  const result2 = await updateTopic(
+    topicId,
+    DateTime.now().toString(),
+    DateTime.now().plus({ hours: 48 }).toString()
+  );
   alert(JSON.stringify(result));
 };
 
@@ -47,7 +53,7 @@ export default function TopicOptions(props: TopicOptionsProps) {
         <Formik
           initialValues={initialValues}
           onSubmit={(formValue, actions) => {
-            sendOptions(props.userId, props.topic.id, formValue.options);
+            publishTopic(props.userId, props.topic.id, formValue.options);
             actions.setSubmitting(false);
           }}
         >
