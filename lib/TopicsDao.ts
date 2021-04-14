@@ -46,7 +46,7 @@ export async function updateTopic(
 ): Promise<Topic> {
   let { data: result, error } = await supabase
     .from("topics")
-    .update({ started_at: start, end_at: end })
+    .update({ start_at: start, end_at: end })
     .eq("id", id)
     .single();
   return handleError(result, error);
