@@ -1,15 +1,12 @@
 import {
-  Heading,
-  FormControl,
-  Input,
-  Container,
-  Stack,
-  Box,
-  Center,
-  FormErrorMessage,
   Button,
+  Center,
+  FormControl,
+  FormErrorMessage,
+  Heading,
+  Input,
 } from "@chakra-ui/react";
-import { Formik, Field, Form } from "formik";
+import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import { addTopic } from "../lib/TopicsDao";
 
@@ -24,9 +21,9 @@ export default function CreateTopic(props: CreateTopicProps) {
       <Formik
         initialValues={{ topic: "" }}
         onSubmit={async (formValue, actions) => {
-          const id = await addTopic(props.userId, formValue.topic);
+          const topic = await addTopic(props.userId, formValue.topic);
           actions.setSubmitting(false);
-          router.push(`/topics/${encodeURIComponent(id)}`);
+          router.push(`/topics/${encodeURIComponent(topic.id)}`);
         }}
       >
         {(props) => (

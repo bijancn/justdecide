@@ -9,7 +9,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik } from "formik";
-import { addOptions } from "../lib/TopicsDao";
+import { addOptions } from "../lib/OptionsDao";
+import { Topic } from "../lib/TopicsDao";
 import React from "react";
 
 const initialValues = {
@@ -28,11 +29,6 @@ const sendOptions = async (userId, topicId, values) => {
   const result = await addOptions(userId, topicId, values);
   alert(JSON.stringify(result));
 };
-
-interface Topic {
-  title: string;
-  id: string;
-}
 
 interface TopicOptionsProps {
   topic: Topic;
