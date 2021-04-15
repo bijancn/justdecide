@@ -1,4 +1,4 @@
-import { CheckCircleIcon, CopyIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, CopyIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Button,
   Center,
@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,16 +14,16 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Tooltip,
   useClipboard,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 
-interface SubmissionCongratsModalProps {
-  topicId: number;
-  isOpen: boolean;
-  onClose: () => void;
-}
-
+/**
+ * Could be exported when needed
+ *
+ * @param value The text that should be shown with a copy icon
+ */
 function CopyableLink({ value }) {
   const { hasCopied, onCopy } = useClipboard(value);
   return (
@@ -34,7 +35,9 @@ function CopyableLink({ value }) {
             {hasCopied ? (
               <CheckCircleIcon color="green" />
             ) : (
-              <CopyIcon color="gray.500" />
+              <Tooltip label="Click to copy" openDelay={500}>
+                <CopyIcon color="gray.500" />
+              </Tooltip>
             )}
           </Button>
         }
@@ -43,15 +46,29 @@ function CopyableLink({ value }) {
   );
 }
 
+interface SubmissionCongratsModalProps {
+  topicId: number;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
 export default function SubmissionCongratsModal(
   props: SubmissionCongratsModalProps
 ) {
   const initialRef = React.useRef();
-  const [voteLink, setValue] = React.useState("");
+  const [resultLink, setResultLink] = React.useState("");
+  const [joinLink, setJoinLink] = React.useState("");
   useEffect(() => {
     const num = encodeURIComponent(props.topicId);
-    const topic = `https://justdecide.io/topics/${num}/join`;
-    setValue(topic);
+    const host = window.location.hostname;
+    const protocol = window.location.protocol;
+    const port = window.location.port;
+    const isCustomPort = port && !(port == "80" || port == "0");
+    const baseLink = isCustomPort
+      ? `${protocol}//${host}:${port}/topics/${num}`
+      : `${protocol}//${host}/topics/${num}`;
+    setJoinLink(`${baseLink}/join`);
+    setResultLink(`${baseLink}/result`);
   }, [props.topicId]);
   return (
     <>
@@ -68,28 +85,35 @@ export default function SubmissionCongratsModal(
               <Heading>🥳 Great job! 🎉</Heading>
             </Center>
           </ModalHeader>
-          <ModalCloseButton />
+          {/* <ModalCloseButton /> */}
           <ModalBody>
             <p>You are one step closer to making a decision.</p>
             <p>Now send this link</p>
-            <CopyableLink value={voteLink}></CopyableLink>
+            <CopyableLink value={joinLink}></CopyableLink>
             <p>
               to the people you want to participate. You likely also want to
               participate yourself.
             </p>
+            <Center>
+              <Link href={joinLink}>
+                <Button colorScheme="red" ref={initialRef} my="3">
+                  Join the action
+                </Button>
+              </Link>
+            </Center>
             <p>
               Everyone has to express their views within 48 hours or until you
               stop it manually on the results page.
             </p>
+            <Center>
+              <Link href={resultLink}>
+                <Button colorScheme="gray" my="3">
+                  See results
+                </Button>
+              </Link>
+            </Center>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="red" onClick={props.onClose} ref={initialRef}>
-              Participate yourself
-            </Button>
-            <Button colorScheme="gray" onClick={props.onClose} mx="2">
-              See results
-            </Button>
-          </ModalFooter>
+          {/* <ModalFooter></ModalFooter> */}
         </ModalContent>
       </Modal>
     </>
