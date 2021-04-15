@@ -35,7 +35,6 @@ const publishTopic = async (userId, topicId, values) => {
     DateTime.now().toString(),
     DateTime.now().plus({ hours: 48 }).toString()
   );
-  alert(JSON.stringify(result));
 };
 
 interface TopicOptionsProps {
@@ -52,7 +51,7 @@ export default function TopicOptions(props: TopicOptionsProps) {
         topicId={props.topic.id}
         onClose={onClose}
       ></SubmissionCongratsModal>
-      <Button onClick={onOpen}>Open Modal</Button>
+      {/* <Button onClick={onOpen}>Open Modal</Button> */}
       <Box boxShadow="" p="6" rounded="md" bg="white">
         <Heading fontSize={{ base: "xl", sm: "2xl", md: "4xl" }}>
           <p>Possible options for</p>
@@ -113,6 +112,7 @@ export default function TopicOptions(props: TopicOptionsProps) {
                   colorScheme="red"
                   isLoading={props.isSubmitting}
                   type="submit"
+                  onClick={onOpen}
                 >
                   Publish
                 </Button>
