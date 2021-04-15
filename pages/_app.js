@@ -1,15 +1,14 @@
-import { Auth } from "@supabase/ui";
-import { supabase } from "../lib/initSupabase";
 import {
-  Center,
-  Container,
-  HStack,
-  StackDivider,
-  ChakraProvider,
-  extendTheme,
   Button,
+  Center,
+  ChakraProvider,
+  Container,
+  extendTheme,
+  HStack,
 } from "@chakra-ui/react";
+import { Auth } from "@supabase/ui";
 import Logo from "../components/Logo";
+import { supabase } from "../lib/initSupabase";
 
 const theme = extendTheme({
   fonts: {
