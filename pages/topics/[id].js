@@ -12,7 +12,11 @@ const TopicDetailPage = (props) => {
     const topic = await fetchTopic(id);
     setTopic(topic);
   }, [router.isReady]);
-  return <TopicOptions topic={topic} userId={props.user.id} />;
+  return (
+    <>
+      <TopicOptions topic={topic} userId={props.user.id} />
+    </>
+  );
 };
 
 export default TopicDetailPage;

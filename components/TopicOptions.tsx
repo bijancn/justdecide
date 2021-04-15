@@ -7,12 +7,14 @@ import {
   Heading,
   Input,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { addOptions } from "../lib/OptionsDao";
 import { Topic, updateTopic } from "../lib/TopicsDao";
 import React from "react";
 import { DateTime } from "luxon";
+import SubmissionCongratsModal from "../components/SubmissionCongratsModal";
 
 const initialValues = {
   options: [
@@ -42,8 +44,15 @@ interface TopicOptionsProps {
 }
 
 export default function TopicOptions(props: TopicOptionsProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
+      <SubmissionCongratsModal
+        isOpen={isOpen}
+        topicId={props.topic.id}
+        onClose={onClose}
+      ></SubmissionCongratsModal>
+      <Button onClick={onOpen}>Open Modal</Button>
       <Box boxShadow="" p="6" rounded="md" bg="white">
         <Heading fontSize={{ base: "xl", sm: "2xl", md: "4xl" }}>
           <p>Possible options for</p>
