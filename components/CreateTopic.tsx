@@ -28,7 +28,7 @@ export default function CreateTopic(props: CreateTopicProps) {
       >
         {(props) => (
           <Form>
-            <Heading fontSize={{ base: "xl", sm: "2xl", md: "4xl" }}>
+            <Heading fontSize={{ base: "2xl", md: "4xl" }}>
               Let's make a decision on
             </Heading>
 

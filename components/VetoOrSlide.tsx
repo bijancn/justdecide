@@ -1,31 +1,27 @@
-import { CheckIcon } from "@chakra-ui/icons";
 import {
   Box,
   Center,
   FormControl,
-  FormLabel,
   Heading,
-  HStack,
-  Radio,
-  RadioGroup,
   SimpleGrid,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
-  Stack,
   Switch,
   Text,
   useBoolean,
+  VStack,
 } from "@chakra-ui/react";
-import { BiHappy, BiHappyHeartEyes, BiMeh, BiSad } from "react-icons/bi";
-import { FaSadTear, FaRegSadCry } from "react-icons/fa";
 import React from "react";
+import { BiHappy, BiHappyHeartEyes, BiMeh, BiSad } from "react-icons/bi";
+import { FaRegSadCry } from "react-icons/fa";
 
-function LikeSlider({ vetoed, likeValue, setLikeValue }) {
+function LikeSlider({ index, vetoed, likeValue, setLikeValue }) {
   return (
     <Slider
-      aria-label="like-slider"
+      id={`like-slider-${index}`}
+      aria-label={`like-slider-${index}`}
       defaultValue={likeValue}
       colorScheme={vetoed ? "gray.500" : "red"}
       isDisabled={vetoed}
@@ -55,59 +51,96 @@ function LikeSlider({ vetoed, likeValue, setLikeValue }) {
   );
 }
 
-export default function RadioExample() {
-  const [likeValue, setLikeValue] = React.useState(50);
-  const [vetoed, setFlag] = useBoolean();
-  console.log("vetoed", vetoed, "likeValue", likeValue);
+function VoteHeading({ children }) {
+  return (
+    <Box>
+      <Center>
+        <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
+          {children}
+        </Text>
+      </Center>
+    </Box>
+  );
+}
+
+function VoteRow({
+  index,
+  vetoed,
+  setVetoed,
+  likeValue,
+  setLikeValue,
+  children,
+}) {
+  console.log("vetoed", vetoed);
+  return (
+    <>
+      <Box key={`option-${index}`}>
+        <Center>{children}</Center>
+      </Box>
+      <Box key={`slide-${index}`}>
+        <Center>
+          <LikeSlider
+            index={index}
+            vetoed={vetoed}
+            likeValue={likeValue}
+            setLikeValue={setLikeValue}
+          />
+        </Center>
+      </Box>
+      <Box key={`veto-${index}`}>
+        <Center>
+          <Switch
+            id={`veto-switch-${index}`}
+            colorScheme="red"
+            size="lg"
+            value="on"
+            onChange={(_) => setVetoed(!vetoed)}
+          />
+        </Center>
+      </Box>
+    </>
+  );
+}
+
+export default function VetoOrSlide({ topicTitle, options }) {
+  const [likeValues, setLikeValues] = React.useState([50, 70]);
+  const [vetoes, setVetoes] = React.useState([false, false]);
+  console.log("vetoes", vetoes, "likeValues", likeValues);
 
   return (
-    <Center>
-      <FormControl display="flex" alignItems="center">
-        <SimpleGrid columns={3} spacing={10}>
-          <Box>
-            <Center>
-              <Text fontSize="xl" fontWeight="bold">
-                Option
-              </Text>
-            </Center>
-          </Box>
-          <Box>
-            <Center>
-              <Text fontSize="xl" fontWeight="bold">
-                How do you like it?
-              </Text>
-            </Center>
-          </Box>
-          <Box>
-            <Text fontSize="xl" fontWeight="bold">
-              Veto this?
-            </Text>
-          </Box>
-          <Box>
-            <Center>Andronaco</Center>
-          </Box>
-          <Box>
-            <Center>
-              <LikeSlider
-                vetoed={vetoed}
-                likeValue={likeValue}
-                setLikeValue={setLikeValue}
-              />
-            </Center>
-          </Box>
-          <Box>
-            <Center>
-              <Switch
-                id="veto-switch"
-                colorScheme="red"
-                size="lg"
-                onChange={setFlag.toggle}
-                mr={20}
-              />
-            </Center>
-          </Box>
+    <>
+      <VStack spacing={14}>
+        <Heading fontSize={{ base: "2xl", md: "4xl" }} mt={10}>
+          <p>Let's decide</p>
+          <Text color="#e53e3e">{topicTitle}</Text>
+        </Heading>
+        <SimpleGrid columns={3} spacing={5}>
+          <VoteHeading> Option </VoteHeading>
+          <VoteHeading> How do you like it? </VoteHeading>
+          <VoteHeading> Veto this? </VoteHeading>
+          {options.map((option, i) => {
+            return (
+              <VoteRow
+                index={i}
+                vetoed={vetoes[i]}
+                likeValue={likeValues[i]}
+                setLikeValue={(newVal) => {
+                  var newArray = likeValues;
+                  newArray[i] = newVal;
+                  setLikeValues([...newArray]);
+                }}
+                setVetoed={(newVal) => {
+                  var newArr = vetoes;
+                  newArr[i] = newVal;
+                  setVetoes([...newArr]);
+                }}
+              >
+                {option}
+              </VoteRow>
+            );
+          })}
         </SimpleGrid>
-      </FormControl>
-    </Center>
+      </VStack>
+    </>
   );
 }
