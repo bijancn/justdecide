@@ -53,7 +53,7 @@ export default function TopicOptions(props: TopicOptionsProps) {
       ></SubmissionCongratsModal>
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
       <Box boxShadow="" p="6" rounded="md" bg="white">
-        <Heading fontSize={{ base: "xl", sm: "2xl", md: "4xl" }}>
+        <Heading fontSize={{ base: "2xl", md: "4xl" }}>
           <p>Possible options for</p>
           <Text color="#e53e3e">{props.topic.title}</Text>
           <p>are</p>
