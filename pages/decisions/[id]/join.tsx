@@ -1,4 +1,4 @@
-import VetoOrSlide from "../components/VetoOrSlide";
+import VetoOrSlide from "../../../components/VetoOrSlide";
 
 export default function IndexPage({ user }) {
   return (

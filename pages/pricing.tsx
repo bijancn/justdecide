@@ -54,7 +54,7 @@ export default function Pricing() {
               "Overview of team decisions", // Active and past decisions can be viewed
               "Automatically invite team members",
               "Schedule recurring decisions",
-              "Add descriptions to topics and options",
+              "Add descriptions to decisions and options",
             ]}
             cta="Sign up"
             ctaVariant="solid"

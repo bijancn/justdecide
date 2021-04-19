@@ -65,10 +65,10 @@ export default function SubmissionCongratsModal(
     const port = window.location.port;
     const isCustomPort = port && !(port == "80" || port == "0");
     const baseLink = isCustomPort
-      ? `${protocol}//${host}:${port}/topics/${num}`
-      : `${protocol}//${host}/topics/${num}`;
+      ? `${protocol}//${host}:${port}/decisions/${num}`
+      : `${protocol}//${host}/decisions/${num}`;
     setJoinLink(`${baseLink}/join`);
-    setResultLink(`${baseLink}/result`);
+    setResultLink(`${baseLink}/results`);
   }, [props.topicId]);
   return (
     <>
