@@ -6,11 +6,22 @@ import { fetchTopic } from "../../lib/TopicsDao";
 const TopicDetailPage = (props) => {
   const router = useRouter();
   const { id } = router.query;
-  const [topic, setTopic] = useState({ title: "" });
-  useEffect(async () => {
-    if (!router.isReady) return;
-    const topic = await fetchTopic(id);
-    setTopic(topic);
+  const [topic, setTopic] = useState({
+    id: -1,
+    title: "",
+    created_at: "",
+    author: "",
+    started_at: "",
+    end_at: "",
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!router.isReady) return;
+      const topic = await fetchTopic(parseInt(id as string));
+      setTopic(topic);
+    };
+
+    fetchData();
   }, [router.isReady]);
   return (
     <>

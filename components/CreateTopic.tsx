@@ -23,7 +23,7 @@ export default function CreateTopic(props: CreateTopicProps) {
         onSubmit={async (formValue, actions) => {
           const topic = await addTopic(props.userId, formValue.topic);
           actions.setSubmitting(false);
-          router.push(`/topics/${encodeURIComponent(topic.id)}`);
+          router.push(`/decisions/${encodeURIComponent(topic.id)}`);
         }}
       >
         {(props) => (
