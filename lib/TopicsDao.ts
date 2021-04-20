@@ -1,3 +1,4 @@
+import { handleError } from "./errorHandler";
 import { supabase } from "./initSupabase";
 
 export interface Topic {
@@ -19,24 +20,15 @@ export async function fetchTopic(id: number): Promise<Topic> {
 }
 
 export async function addTopic(
-  userId: string,
+  author: string,
   topicTitle: string
 ): Promise<Topic> {
   let topicTextTrimmed = topicTitle.trim();
   let { data: result, error } = await supabase
     .from("topics")
-    .insert({ title: topicTextTrimmed, author: userId })
+    .insert({ title: topicTextTrimmed, author: author })
     .single();
   return handleError(result, error);
-}
-
-function handleError<T>(result: T, error: any): T {
-  if (error) {
-    console.log("error", error);
-    // TODO: Error handling? "Oops Page"
-  } else {
-    return result;
-  }
 }
 
 export async function updateTopic(

@@ -7,7 +7,9 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { Auth } from "@supabase/ui";
+import React from "react";
 import Logo from "../components/Logo";
+import Navbar from "../components/Navbar";
 import { supabase } from "../lib/initSupabase";
 
 const theme = extendTheme({
@@ -25,14 +27,19 @@ function InnerApp({ Component, pageProps }) {
         <Container maxW={"3xl"}>
           <HStack justify="space-between">
             <Logo />
-            <Button
-              onClick={async () => {
-                const { error } = await supabase.auth.signOut();
-                if (error) console.log("Error logging out:", error.message);
-              }}
-            >
-              Logout
-            </Button>
+            <HStack spacing={5}>
+              <Navbar />
+              {/* TODO: https://github.com/bijancn/justdecide/issues/32
+               Need login and logout button with login button opening a login modal */}
+              <Button
+                onClick={async () => {
+                  const { error } = await supabase.auth.signOut();
+                  if (error) console.log("Error logging out:", error.message);
+                }}
+              >
+                {user ? "Logout" : "Login"}
+              </Button>
+            </HStack>
           </HStack>
           {!user ? (
             <div>

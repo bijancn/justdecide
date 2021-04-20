@@ -1,6 +1,6 @@
 import HowItWorks from "../components/HowItWorks";
 
-export default function IndexPage({ user }) {
+export default function HotItWorksPage({ user }) {
   return (
     <>
       <HowItWorks />
