@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Center,
   FormControl,
   Heading,
@@ -16,15 +17,17 @@ import {
 import React from "react";
 import { BiHappy, BiHappyHeartEyes, BiMeh, BiSad } from "react-icons/bi";
 import { FaRegSadCry } from "react-icons/fa";
+import { insertVote } from "../lib/VotesDao";
+import VoteCongratsModal from "./VoteCongratsModal";
 
-function LikeSlider({ index, vetoed, likeValue, setLikeValue }) {
+function LikeSlider({ index, isVetoed, likeValue, setLikeValue }) {
   return (
     <Slider
       id={`like-slider-${index}`}
       aria-label={`like-slider-${index}`}
       defaultValue={likeValue}
-      colorScheme={vetoed ? "gray.500" : "red"}
-      isDisabled={vetoed}
+      colorScheme={isVetoed ? "gray.500" : "red"}
+      isDisabled={isVetoed}
       size="lg"
       onChange={(value) => setLikeValue(value)}
     >
@@ -33,9 +36,9 @@ function LikeSlider({ index, vetoed, likeValue, setLikeValue }) {
       </SliderTrack>
       <SliderThumb boxSize={7}>
         <Box
-          color={vetoed ? "gray.800" : "red"}
+          color={isVetoed ? "gray.800" : "red"}
           as={
-            vetoed
+            isVetoed
               ? FaRegSadCry
               : likeValue < 25
               ? BiSad
@@ -65,23 +68,24 @@ function VoteHeading({ children }) {
 
 function VoteRow({
   index,
-  vetoed,
+  isVetoed,
   setVetoed,
   likeValue,
   setLikeValue,
   children,
 }) {
-  console.log("vetoed", vetoed);
   return (
     <>
       <Box key={`option-${index}`}>
-        <Center>{children}</Center>
+        <Center>
+          <Text color={isVetoed ? "gray.500" : "gray.800"}>{children}</Text>
+        </Center>
       </Box>
       <Box key={`slide-${index}`}>
         <Center>
           <LikeSlider
             index={index}
-            vetoed={vetoed}
+            isVetoed={isVetoed}
             likeValue={likeValue}
             setLikeValue={setLikeValue}
           />
@@ -94,7 +98,7 @@ function VoteRow({
             colorScheme="red"
             size="lg"
             value="on"
-            onChange={(_) => setVetoed(!vetoed)}
+            onChange={(_) => setVetoed(!isVetoed)}
           />
         </Center>
       </Box>
@@ -102,17 +106,19 @@ function VoteRow({
   );
 }
 
-export default function VetoOrSlide({ topicTitle, options }) {
-  const [likeValues, setLikeValues] = React.useState([50, 70]);
-  const [vetoes, setVetoes] = React.useState([false, false]);
+export default function VetoOrLike({ userId, topic, options }) {
+  const [likeValues, setLikeValues] = React.useState(options.map((o) => 50));
+  const [vetoes, setVetoes] = React.useState(options.map((o) => false));
+  const [isOpen, setIsOpen] = React.useState(false);
   console.log("vetoes", vetoes, "likeValues", likeValues);
 
   return (
     <>
+      <VoteCongratsModal topic={topic} isOpen={isOpen} />
       <VStack spacing={14}>
         <Heading fontSize={{ base: "2xl", md: "4xl" }} mt={10}>
-          <p>Let's decide</p>
-          <Text color="#e53e3e">{topicTitle}</Text>
+          <p>Just decide on</p>
+          <Text color="#e53e3e">{topic.title}</Text>
         </Heading>
         <SimpleGrid columns={3} spacing={5}>
           <VoteHeading> Option </VoteHeading>
@@ -121,8 +127,8 @@ export default function VetoOrSlide({ topicTitle, options }) {
           {options.map((option, i) => {
             return (
               <VoteRow
-                index={i}
-                vetoed={vetoes[i]}
+                index={option.id}
+                isVetoed={vetoes[i]}
                 likeValue={likeValues[i]}
                 setLikeValue={(newVal) => {
                   var newArray = likeValues;
@@ -135,11 +141,22 @@ export default function VetoOrSlide({ topicTitle, options }) {
                   setVetoes([...newArr]);
                 }}
               >
-                {option}
+                {option.title}
               </VoteRow>
             );
           })}
         </SimpleGrid>
+        <Button
+          colorScheme="red"
+          onClick={(e) => {
+            setIsOpen(true);
+            options.forEach(async (option, i) => {
+              insertVote(userId, option.id, likeValues[i], vetoes[i]);
+            });
+          }}
+        >
+          Submit
+        </Button>
       </VStack>
     </>
   );

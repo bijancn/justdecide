@@ -39,8 +39,7 @@ export async function fetchOptionsOfTopic(
   let { data: result, error } = await supabase
     .from("options")
     .select("*")
-    .eq("topic_id", topicId)
-    .single();
+    .eq("topic_id", topicId);
   if (error) console.log("error", error);
   else return result;
 }

@@ -18,6 +18,7 @@ import {
   useClipboard,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import { buildBaseLink } from "../lib/utilities";
 
 /**
  * Could be exported when needed
@@ -49,7 +50,6 @@ function CopyableLink({ value }) {
 interface SubmissionCongratsModalProps {
   topicId: number;
   isOpen: boolean;
-  onClose: () => void;
 }
 
 export default function SubmissionCongratsModal(
@@ -59,14 +59,7 @@ export default function SubmissionCongratsModal(
   const [resultLink, setResultLink] = React.useState("");
   const [joinLink, setJoinLink] = React.useState("");
   useEffect(() => {
-    const num = encodeURIComponent(props.topicId);
-    const host = window.location.hostname;
-    const protocol = window.location.protocol;
-    const port = window.location.port;
-    const isCustomPort = port && !(port == "80" || port == "0");
-    const baseLink = isCustomPort
-      ? `${protocol}//${host}:${port}/decisions/${num}`
-      : `${protocol}//${host}/decisions/${num}`;
+    const baseLink = buildBaseLink(props.topicId);
     setJoinLink(`${baseLink}/join`);
     setResultLink(`${baseLink}/results`);
   }, [props.topicId]);
@@ -74,9 +67,9 @@ export default function SubmissionCongratsModal(
     <>
       <Modal
         isOpen={props.isOpen}
-        onClose={props.onClose}
         isCentered
         initialFocusRef={initialRef}
+        onClose={() => void 0}
       >
         <ModalOverlay />
         <ModalContent>
@@ -85,7 +78,6 @@ export default function SubmissionCongratsModal(
               <Heading>🥳 Great job! 🎉</Heading>
             </Center>
           </ModalHeader>
-          {/* <ModalCloseButton /> */}
           <ModalBody>
             <p>You are one step closer to making a decision.</p>
             <p>Now send this link</p>
@@ -113,7 +105,6 @@ export default function SubmissionCongratsModal(
               </Link>
             </Center>
           </ModalBody>
-          {/* <ModalFooter></ModalFooter> */}
         </ModalContent>
       </Modal>
     </>

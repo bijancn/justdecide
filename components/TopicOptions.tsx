@@ -49,7 +49,6 @@ export default function TopicOptions(props: TopicOptionsProps) {
       <SubmissionCongratsModal
         isOpen={isOpen}
         topicId={props.topic.id}
-        onClose={onClose}
       ></SubmissionCongratsModal>
       {/* <Button onClick={onOpen}>Open Modal</Button> */}
       <Box boxShadow="" p="6" rounded="md" bg="white">
