@@ -12,6 +12,8 @@ import Logo from "../components/Logo";
 import Navbar from "../components/Navbar";
 import { supabase } from "../lib/initSupabase";
 
+import Head from "next/head";
+
 const theme = extendTheme({
   fonts: {
     heading: "Work Sans, system-ui, sans-serif",
@@ -63,8 +65,35 @@ function InnerApp({ Component, pageProps }) {
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <Auth.UserContextProvider supabaseClient={supabase}>
-      <InnerApp Component={Component} pageProps={pageProps}></InnerApp>
-    </Auth.UserContextProvider>
+    <div>
+      <Head>
+        <title>JustDecide</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        {/* https://counter.dev/ */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: ` if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"bijancn",utcoffset:"2"}))};sessionStorage.setItem("_swa","1"); `,
+          }}
+        />
+        {/* https://hotjar.com */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(h,o,t,j,a,r){
+                  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                  h._hjSettings={hjid:2362315,hjsv:6};
+                  a=o.getElementsByTagName('head')[0];
+                  r=o.createElement('script');r.async=1;
+                  r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                  a.appendChild(r);
+              })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+          `,
+          }}
+        />
+      </Head>
+      <Auth.UserContextProvider supabaseClient={supabase}>
+        <InnerApp Component={Component} pageProps={pageProps}></InnerApp>
+      </Auth.UserContextProvider>
+    </div>
   );
 }
