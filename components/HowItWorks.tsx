@@ -1,6 +1,5 @@
 import { Heading, Text, VStack, Link } from "@chakra-ui/layout";
 import { chakra } from "@chakra-ui/system";
-import React from "react";
 
 export default function HowItWorks() {
   return (
