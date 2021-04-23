@@ -36,7 +36,7 @@ export default function HowItWorks() {
           <Link
             href="https://twitter.com/intent/tweet?text=Hey%20%40JustDecideApp%20%23JustDecide.%20I%20would%20really%20like%20you%20to%20build"
             isExternal
-            color="#e53e3e"
+            color="red.500"
           >
             tweet us
           </Link>

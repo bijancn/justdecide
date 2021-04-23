@@ -1,31 +1,31 @@
+import { CheckIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Center,
-  Text,
-  Stack,
-  List,
-  ListItem,
-  ListIcon,
   Button,
-  useColorModeValue,
-  HStack,
-  Heading,
-  VStack,
+  Center,
   chakra,
+  List,
+  ListIcon,
+  ListItem,
+  Stack,
+  Text,
+  useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
+import Link from "next/link";
 import React from "react";
+import BigHeading from "../components/basics/BigHeading";
 
 export default function Pricing() {
   return (
     <>
       <VStack spacing={14}>
-        <Heading fontSize={{ base: "2xl", md: "4xl" }} mt={10}>
+        <BigHeading>
           JustDecide is <chakra.span color="#e53e3e">Free</chakra.span> for
           basic usage. <p />
           Teams can accelerate with{" "}
           <chakra.span color="#e53e3e">Premium</chakra.span>.
-        </Heading>
+        </BigHeading>
         <Stack
           direction={{ base: "column", md: "row" }}
           spacing={{ base: 4, md: 16 }}
@@ -43,6 +43,7 @@ export default function Pricing() {
             ]}
             cta="Use now"
             ctaVariant="outline"
+            link="/create"
           ></PricingSlide>
           <PricingSlide
             tierName="Premium"
@@ -58,6 +59,7 @@ export default function Pricing() {
             ]}
             cta="Sign up"
             ctaVariant="solid"
+            link="/signup"
           ></PricingSlide>
         </Stack>
       </VStack>
@@ -101,6 +103,7 @@ function PricingSlide({
   features,
   cta,
   ctaVariant,
+  link,
 }) {
   return (
     <Box
@@ -114,7 +117,6 @@ function PricingSlide({
       <TierAndPrice tierName={tierName} price={price}></TierAndPrice>
       <Box
         bg={useColorModeValue("gray.50", "gray.900")}
-        // bg="green"
         px={6}
         py={6}
         height="full"
@@ -134,16 +136,17 @@ function PricingSlide({
           ))}
         </List>
         <Center pt={6}>
-          <Button
-            // mt={10}
-            w={"50%"}
-            colorScheme="red"
-            rounded={"xl"}
-            shadow="md"
-            variant={ctaVariant}
-          >
-            {cta}
-          </Button>
+          <Link href={link}>
+            <Button
+              colorScheme="red"
+              rounded={"xl"}
+              shadow="lg"
+              variant={ctaVariant}
+              px={16}
+            >
+              {cta}
+            </Button>
+          </Link>
         </Center>
       </Box>
     </Box>

@@ -1,4 +1,4 @@
-import { CheckCircleIcon, CopyIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, CopyIcon } from "@chakra-ui/icons";
 import {
   Button,
   Center,
@@ -6,19 +6,18 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Link,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Tooltip,
   useClipboard,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import React, { useEffect } from "react";
 import { buildBaseLink } from "../lib/utilities";
+import LinkedButton from "./basics/LinkedButton";
 
 /**
  * Could be exported when needed
@@ -87,22 +86,23 @@ export default function SubmissionCongratsModal(
               participate yourself.
             </p>
             <Center>
-              <Link href={joinLink}>
-                <Button colorScheme="red" ref={initialRef} my="3">
-                  Join the action
-                </Button>
-              </Link>
+              <LinkedButton href={joinLink} ref={initialRef} my="3">
+                Join the action
+              </LinkedButton>
             </Center>
             <p>
               Everyone has to express their views within 48 hours or until you
               stop it manually on the results page.
             </p>
             <Center>
-              <Link href={resultLink}>
-                <Button colorScheme="gray" my="3">
-                  See results
-                </Button>
-              </Link>
+              <LinkedButton
+                colorScheme="gray"
+                href={resultLink}
+                ref={initialRef}
+                my="3"
+              >
+                See results
+              </LinkedButton>
             </Center>
           </ModalBody>
         </ModalContent>

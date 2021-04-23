@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Center,
+  Container,
   FormControl,
   FormErrorMessage,
   Heading,
@@ -15,6 +16,8 @@ import { Topic, updateTopic } from "../lib/TopicsDao";
 import React from "react";
 import { DateTime } from "luxon";
 import SubmissionCongratsModal from "../components/SubmissionCongratsModal";
+import BigHeading from "./basics/BigHeading";
+import TextHighlight from "./basics/TextHighlight";
 
 const initialValues = {
   options: [
@@ -45,18 +48,17 @@ interface TopicOptionsProps {
 export default function TopicOptions(props: TopicOptionsProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <>
+    <Container fontSize="2xl" textAlign="center">
       <SubmissionCongratsModal
         isOpen={isOpen}
         topicId={props.topic.id}
       ></SubmissionCongratsModal>
-      {/* <Button onClick={onOpen}>Open Modal</Button> */}
-      <Box boxShadow="" p="6" rounded="md" bg="white">
-        <Heading fontSize={{ base: "2xl", md: "4xl" }}>
+      <Box>
+        <BigHeading>
           <p>Possible options for</p>
-          <Text color="#e53e3e">{props.topic.title}</Text>
+          <TextHighlight>{props.topic.title}</TextHighlight>
           <p>are</p>
-        </Heading>
+        </BigHeading>
         <Formik
           initialValues={initialValues}
           onSubmit={(formValue, actions) => {
@@ -85,8 +87,10 @@ export default function TopicOptions(props: TopicOptionsProps) {
                                       : "Optional extra options"
                                   }
                                   aria-label={"Your Option"}
-                                  size="lg"
+                                  size={{ base: "22px", md: "38px" }}
                                   variant="flushed"
+                                  pt={5}
+                                  width={{ base: "100%", sm: "85%", md: "75%" }}
                                 />
                                 <FormErrorMessage>
                                   {form.errors.name}
@@ -120,6 +124,6 @@ export default function TopicOptions(props: TopicOptionsProps) {
           )}
         </Formik>
       </Box>
-    </>
+    </Container>
   );
 }

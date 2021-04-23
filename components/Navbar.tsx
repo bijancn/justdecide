@@ -1,12 +1,6 @@
-import {
-  Box,
-  Link,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Stack,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Popover, PopoverTrigger, Stack } from "@chakra-ui/react";
+import React from "react";
+import JDLink from "./basics/JDLink";
 
 interface NavItem {
   label: string;
@@ -21,10 +15,6 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "/how-it-works",
   },
   {
-    label: "Create new decision",
-    href: "/create",
-  },
-  {
     label: "Pricing",
     href: "/pricing",
   },
@@ -37,19 +27,14 @@ export default function Navbar() {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link
-                p={2}
+              <JDLink
+                p={5}
                 href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
-                color={useColorModeValue("gray.600", "gray.200")}
-                _hover={{
-                  textDecoration: "none",
-                  color: useColorModeValue("gray.800", "white"),
-                }}
+                color="gray.600"
+                _hover={{ color: "#e53e3e" }}
               >
                 {navItem.label}
-              </Link>
+              </JDLink>
             </PopoverTrigger>
           </Popover>
         </Box>
