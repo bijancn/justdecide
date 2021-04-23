@@ -1,6 +1,7 @@
 import {
   Button,
   Center,
+  Container,
   FormControl,
   FormErrorMessage,
   Heading,
@@ -8,7 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import React from "react";
 import { addTopic } from "../lib/TopicsDao";
+import BigHeading from "./basics/BigHeading";
 
 interface CreateTopicProps {
   userId: string;
@@ -17,7 +20,7 @@ interface CreateTopicProps {
 export default function CreateTopic(props: CreateTopicProps) {
   const router = useRouter();
   return (
-    <div>
+    <Container fontSize="2xl" textAlign="center">
       <Formik
         initialValues={{ topic: "" }}
         onSubmit={async (formValue, actions) => {
@@ -28,9 +31,7 @@ export default function CreateTopic(props: CreateTopicProps) {
       >
         {(props) => (
           <Form>
-            <Heading fontSize={{ base: "2xl", md: "4xl" }}>
-              Let's make a decision on
-            </Heading>
+            <BigHeading>Let's make a decision on</BigHeading>
 
             <Field name="topic">
               {({ field, form }) => (
@@ -40,8 +41,11 @@ export default function CreateTopic(props: CreateTopicProps) {
                     id="topic"
                     placeholder="Where to go for Lunch"
                     aria-label={"Your Topic"}
-                    size="lg"
+                    size={{ base: "22px", md: "38px" }}
                     variant="flushed"
+                    colorScheme="red"
+                    pt={5}
+                    width={{ base: "100%", sm: "85%", md: "75%" }}
                   />
                   <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                 </FormControl>
@@ -59,6 +63,6 @@ export default function CreateTopic(props: CreateTopicProps) {
           </Form>
         )}
       </Formik>
-    </div>
+    </Container>
   );
 }

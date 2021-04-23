@@ -1,18 +1,113 @@
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Button,
   Center,
+  chakra,
   ChakraProvider,
   Container,
   extendTheme,
   HStack,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  Stack,
+  Text,
+  useColorModeValue,
+  VisuallyHidden,
+  VStack,
 } from "@chakra-ui/react";
 import { Auth } from "@supabase/ui";
-import React from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import React, { ReactNode } from "react";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import JDLink from "../components/basics/JDLink";
 import Logo from "../components/Logo";
 import Navbar from "../components/Navbar";
 import { supabase } from "../lib/initSupabase";
 
-import Head from "next/head";
+const SocialButton = ({
+  children,
+  label,
+  href,
+}: {
+  children: ReactNode;
+  label: string;
+  href: string;
+}) => {
+  return (
+    <chakra.button
+      bg={useColorModeValue("blackAlpha.100", "whiteAlpha.100")}
+      rounded={"full"}
+      w={8}
+      h={8}
+      cursor={"pointer"}
+      as={"a"}
+      href={href}
+      display={"inline-flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      transition={"background 0.3s ease"}
+      _hover={{ color: "#e53e3e" }}
+      color="gray.600"
+    >
+      <VisuallyHidden>{label}</VisuallyHidden>
+      {children}
+    </chakra.button>
+  );
+};
+
+function JDFooter() {
+  return (
+    <Center>
+      <Container
+        as={Stack}
+        // mt={5}
+        py={5}
+        direction={{ base: "column", md: "row" }}
+        justify={{ base: "center", md: "space-between" }}
+        align={{ base: "center", md: "center" }}
+        width="100vw"
+        maxWidth="1260px"
+        color="gray.400"
+      >
+        <Text>© 2021 JustDecide. All rights reserved.</Text>
+        <Text>
+          Made by{" "}
+          <JDLink href={"https://github.com/sponsors/bijancn"} color="gray.600">
+            Bijan Chokoufe Nejad
+          </JDLink>
+        </Text>
+        <JDLink href="/terms-and-privacy" color="gray.600">
+          Terms & Privacy
+        </JDLink>
+        <Stack direction={"row"} spacing={6}>
+          <SocialButton
+            label={"Twitter"}
+            href={"https://twitter.com/JustDecideApp"}
+          >
+            <FaTwitter />
+          </SocialButton>
+          <SocialButton
+            label={"Github"}
+            href={"https://github.com/bijancn/justdecide"}
+          >
+            <FaGithub />
+          </SocialButton>
+          <SocialButton
+            label={"LinkedIn"}
+            href="https://www.linkedin.com/in/bijanchokoufe/"
+          >
+            <FaLinkedin />
+          </SocialButton>
+        </Stack>
+      </Container>
+    </Center>
+  );
+}
 
 const theme = extendTheme({
   fonts: {
@@ -26,23 +121,14 @@ function InnerApp({ Component, pageProps }) {
   return (
     <div>
       <ChakraProvider theme={theme}>
-        <Container maxW={"3xl"}>
-          <HStack justify="space-between">
-            <Logo />
-            <HStack spacing={5}>
-              <Navbar />
-              {/* TODO: https://github.com/bijancn/justdecide/issues/32
-               Need login and logout button with login button opening a login modal */}
-              <Button
-                onClick={async () => {
-                  const { error } = await supabase.auth.signOut();
-                  if (error) console.log("Error logging out:", error.message);
-                }}
-              >
-                {user ? "Logout" : "Login"}
-              </Button>
-            </HStack>
-          </HStack>
+        <VStack
+          maxW={"3xl"}
+          justify="space-between"
+          height="100vh"
+          width="100vw"
+          maxWidth="100vw"
+        >
+          <JDHeader user={user} />
           {!user ? (
             <div>
               <Auth
@@ -54,12 +140,78 @@ function InnerApp({ Component, pageProps }) {
             </div>
           ) : (
             <Center>
-              <Component {...pageProps} user={supabase.auth.user()} />
+              <Container as={Stack} width="100vw" maxWidth="1260px">
+                <Component {...pageProps} user={supabase.auth.user()} />
+              </Container>
             </Center>
           )}
-        </Container>
+          <JDFooter />
+        </VStack>
       </ChakraProvider>
     </div>
+  );
+}
+
+function BurgerMenu() {
+  const Links = ["Dashboard", "Projects", "Team"];
+  const router = useRouter();
+
+  return (
+    <>
+      <Menu>
+        <MenuButton
+          as={IconButton}
+          variant="ghost"
+          icon={<HamburgerIcon />}
+          display={{ base: "inherit", md: "none" }}
+          transition="all 0.2s"
+          boxSize="67px"
+          mt={6}
+          mr={2}
+          _focus={{ boxShadow: "outline" }}
+        />
+        <MenuList>
+          <MenuItem onClick={(_) => router.push("/how-it-works")}>
+            How it works
+          </MenuItem>
+          <MenuItem onClick={(_) => router.push("/pricing")}>Pricing</MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={(_) => router.push("/create")}>Start Now</MenuItem>
+          <MenuItem onClick={(_) => logout()}>Logout</MenuItem>
+        </MenuList>
+      </Menu>
+    </>
+  );
+}
+
+async function logout() {
+  const { error } = await supabase.auth.signOut();
+  if (error) console.log("Error logging out:", error.message);
+}
+
+function JDHeader({ user }) {
+  return (
+    <HStack justify="space-between" width="100vw" maxWidth="1260px">
+      <Logo />
+      <BurgerMenu />
+      <HStack spacing={5} pr={5} display={{ base: "none", md: "inherit" }}>
+        <Navbar />
+        {/* TODO: https://github.com/bijancn/justdecide/issues/32
+               Need login and logout button with login button opening a login modal */}
+        <JDLink href="/create">
+          <Button colorScheme="red" variant="solid">
+            Start now
+          </Button>
+        </JDLink>
+        <Button
+          onClick={async () => {
+            logout();
+          }}
+        >
+          {user ? "Logout" : "Login"}
+        </Button>
+      </HStack>
+    </HStack>
   );
 }
 

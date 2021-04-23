@@ -1,8 +1,6 @@
 import {
-  Button,
   Center,
   Heading,
-  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -12,9 +10,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import { timeLeft } from "../lib/timeLeft";
 import { Topic } from "../lib/TopicsDao";
 import { buildBaseLink } from "../lib/utilities";
-import { timeLeft } from "../lib/timeLeft";
+import LinkedButton from "./basics/LinkedButton";
 
 interface VoteCongratsModalProps {
   topic: Topic;
@@ -54,13 +53,10 @@ export default function VoteCongratsModal(props: VoteCongratsModalProps) {
                 from the rest of the group.
               </Text>
               <Center>
-                <Link href={resultLink}>
-                  <Button colorScheme="red" my="3">
-                    Check results now
-                  </Button>
-                </Link>
+                <LinkedButton href={resultLink} my="3">
+                  Check results now
+                </LinkedButton>
               </Center>
-              {/* TODO: Compute based on end date of topic */}
               <Text>
                 ⏰ The decision making process is open for{" "}
                 {timeLeft(props.topic)} more hours or until the author stops it
