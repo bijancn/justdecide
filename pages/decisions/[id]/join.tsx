@@ -32,12 +32,6 @@ export default function IndexPage({ user }) {
     fetchData();
   }, [router.isReady]);
   return (
-    <>
-      {options ? (
-        <VetoOrLike userId={user.id} topic={topic} options={options} />
-      ) : (
-        "Loading"
-      )}
-    </>
+    <>{options ? <VetoOrLike topic={topic} options={options} /> : "Loading"}</>
   );
 }

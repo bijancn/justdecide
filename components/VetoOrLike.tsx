@@ -1,3 +1,4 @@
+import { Auth } from "@supabase/ui";
 import {
   Box,
   Button,
@@ -19,11 +20,13 @@ import { BiHappy, BiHappyHeartEyes, BiMeh, BiSad } from "react-icons/bi";
 import { FaRegSadCry } from "react-icons/fa";
 import { insertVote } from "../lib/VotesDao";
 import VoteCongratsModal from "./VoteCongratsModal";
+import LoginModal from "./LoginModal";
 
 function LikeSlider({ index, isVetoed, likeValue, setLikeValue }) {
   return (
     <Slider
       id={`like-slider-${index}`}
+      key={`like-slider-${index}`}
       aria-label={`like-slider-${index}`}
       defaultValue={likeValue}
       colorScheme={isVetoed ? "gray.500" : "red"}
@@ -56,13 +59,13 @@ function LikeSlider({ index, isVetoed, likeValue, setLikeValue }) {
 
 function VoteHeading({ children }) {
   return (
-    <Box>
-      <Center>
-        <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
-          {children}
-        </Text>
-      </Center>
-    </Box>
+    <Center
+      key={children}
+      fontSize={{ base: "lg", md: "xl" }}
+      fontWeight="bold"
+    >
+      {children}
+    </Center>
   );
 }
 
@@ -76,25 +79,26 @@ function VoteRow({
 }) {
   return (
     <>
-      <Box key={`option-${index}`}>
-        <Center>
-          <Text color={isVetoed ? "gray.500" : "gray.800"}>{children}</Text>
-        </Center>
-      </Box>
-      <Box key={`slide-${index}`}>
-        <Center>
-          <LikeSlider
-            index={index}
-            isVetoed={isVetoed}
-            likeValue={likeValue}
-            setLikeValue={setLikeValue}
-          />
-        </Center>
-      </Box>
+      <Center
+        key={`option-${index}`}
+        color={isVetoed ? "gray.500" : "gray.800"}
+      >
+        {children}
+      </Center>
+      <Center key={`slide-${index}`}>
+        <LikeSlider
+          index={index}
+          key={index}
+          isVetoed={isVetoed}
+          likeValue={likeValue}
+          setLikeValue={setLikeValue}
+        />
+      </Center>
       <Box key={`veto-${index}`}>
         <Center>
           <Switch
             id={`veto-switch-${index}`}
+            key={`veto-switch-${index}`}
             colorScheme="red"
             size="lg"
             value="on"
@@ -106,15 +110,17 @@ function VoteRow({
   );
 }
 
-export default function VetoOrLike({ userId, topic, options }) {
+export default function VetoOrLike({ topic, options }) {
   const [likeValues, setLikeValues] = React.useState(options.map((o) => 50));
   const [vetoes, setVetoes] = React.useState(options.map((o) => false));
   const [isOpen, setIsOpen] = React.useState(false);
+  const { user } = Auth.useUser();
   console.log("vetoes", vetoes, "likeValues", likeValues);
 
   return (
     <>
       <VoteCongratsModal topic={topic} isOpen={isOpen} />
+      <LoginModal user={user} />
       <VStack spacing={14}>
         <Heading fontSize={{ base: "2xl", md: "4xl" }} mt={10}>
           <p>Just decide on</p>
@@ -151,7 +157,7 @@ export default function VetoOrLike({ userId, topic, options }) {
           onClick={(e) => {
             setIsOpen(true);
             options.forEach(async (option, i) => {
-              insertVote(userId, option.id, likeValues[i], vetoes[i]);
+              insertVote(user.id, option.id, likeValues[i], vetoes[i]);
             });
           }}
         >

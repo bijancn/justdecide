@@ -54,7 +54,6 @@ interface SubmissionCongratsModalProps {
 export default function SubmissionCongratsModal(
   props: SubmissionCongratsModalProps
 ) {
-  const initialRef = React.useRef();
   const [resultLink, setResultLink] = React.useState("");
   const [joinLink, setJoinLink] = React.useState("");
   useEffect(() => {
@@ -64,12 +63,7 @@ export default function SubmissionCongratsModal(
   }, [props.topicId]);
   return (
     <>
-      <Modal
-        isOpen={props.isOpen}
-        isCentered
-        initialFocusRef={initialRef}
-        onClose={() => void 0}
-      >
+      <Modal isOpen={props.isOpen} isCentered onClose={() => void 0}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -86,7 +80,7 @@ export default function SubmissionCongratsModal(
               participate yourself.
             </p>
             <Center>
-              <LinkedButton href={joinLink} ref={initialRef} my="3">
+              <LinkedButton href={joinLink} my="3">
                 Join the action
               </LinkedButton>
             </Center>
@@ -95,12 +89,7 @@ export default function SubmissionCongratsModal(
               stop it manually on the results page.
             </p>
             <Center>
-              <LinkedButton
-                colorScheme="gray"
-                href={resultLink}
-                ref={initialRef}
-                my="3"
-              >
+              <LinkedButton colorScheme="gray" href={resultLink} my="3">
                 See results
               </LinkedButton>
             </Center>

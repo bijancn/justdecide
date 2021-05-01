@@ -1,3 +1,4 @@
+import { Auth } from "@supabase/ui";
 import {
   Box,
   Button,
@@ -18,6 +19,7 @@ import { DateTime } from "luxon";
 import SubmissionCongratsModal from "../components/SubmissionCongratsModal";
 import BigHeading from "./basics/BigHeading";
 import TextHighlight from "./basics/TextHighlight";
+import LoginModal from "./LoginModal";
 
 const initialValues = {
   options: [
@@ -42,13 +44,14 @@ const publishTopic = async (userId, topicId, values) => {
 
 interface TopicOptionsProps {
   topic: Topic;
-  userId: string;
 }
 
 export default function TopicOptions(props: TopicOptionsProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = Auth.useUser();
   return (
     <Container fontSize="2xl" textAlign="center">
+      <LoginModal user={user} />
       <SubmissionCongratsModal
         isOpen={isOpen}
         topicId={props.topic.id}
@@ -62,7 +65,7 @@ export default function TopicOptions(props: TopicOptionsProps) {
         <Formik
           initialValues={initialValues}
           onSubmit={(formValue, actions) => {
-            publishTopic(props.userId, props.topic.id, formValue.options);
+            publishTopic(user.id, props.topic.id, formValue.options);
             actions.setSubmitting(false);
           }}
         >

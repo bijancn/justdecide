@@ -54,24 +54,26 @@ function WithLargeQuote() {
     <Stack
       bg="gray.50"
       mt={4}
-      py={8}
+      py={4}
       px={8}
-      spacing={{ base: 8, md: 10 }}
-      align={"center"}
+      spacing={{ base: 4, md: 8 }}
       direction={"column"}
+      fontSize={{ base: "xl", md: "2xl" }}
+      textAlign={"center"}
+      maxW={"3xl"}
     >
-      <Text
-        fontSize={{ base: "xl", md: "2xl" }}
-        textAlign={"center"}
-        maxW={"3xl"}
-      >
+      <Text>
         <chakra.span fontWeight="bold">We reject</chakra.span>: kings,
         presidents and voting.
-        <p /> <chakra.span fontWeight="bold">We believe in</chakra.span>: rough
+      </Text>
+      <Text>
+        <chakra.span fontWeight="bold">We believe in</chakra.span>: rough
         consensus and running code.
       </Text>
       <Box textAlign={"center"}>
-        <Text fontWeight={600}> Dave Clark </Text>
+        <Text fontWeight={600} fontSize="md">
+          Dave Clark
+        </Text>
         <Text fontSize={"sm"} color={useColorModeValue("gray.400", "gray.400")}>
           Proceedings of the 24th IETF, 1992
         </Text>

@@ -129,7 +129,7 @@ function PricingSlide({
         </Box>
         <List spacing={2}>
           {features.map((feature) => (
-            <ListItem>
+            <ListItem key={feature}>
               <ListIcon as={CheckIcon} color="green.500" />
               {feature}
             </ListItem>

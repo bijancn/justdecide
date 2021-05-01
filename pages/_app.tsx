@@ -1,33 +1,16 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
 import {
-  Button,
   Center,
-  chakra,
   ChakraProvider,
   Container,
   extendTheme,
-  HStack,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   Stack,
-  Text,
-  useColorModeValue,
-  VisuallyHidden,
   VStack,
 } from "@chakra-ui/react";
 import { Auth } from "@supabase/ui";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import React, { ReactNode } from "react";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import JDLink from "../components/basics/JDLink";
+import React from "react";
 import Footer from "../components/Footer";
-import Logo from "../components/Logo";
-import Navbar from "../components/Navbar";
+import Header from "../components/Header";
 import { supabase } from "../lib/initSupabase";
 
 const theme = extendTheme({
@@ -38,7 +21,6 @@ const theme = extendTheme({
 });
 
 function InnerApp({ Component, pageProps }) {
-  const { user } = Auth.useUser();
   return (
     <div>
       <ChakraProvider theme={theme}>
@@ -49,90 +31,16 @@ function InnerApp({ Component, pageProps }) {
           width="100vw"
           maxWidth="100vw"
         >
-          <JDHeader user={user} />
-          {!user ? (
-            <div>
-              <Auth
-                supabaseClient={supabase}
-                providers={["google", "github"]}
-                socialLayout="horizontal"
-                socialButtonSize="xlarge"
-              />
-            </div>
-          ) : (
-            <Center>
-              <Container as={Stack} width="100vw" maxWidth="1260px">
-                <Component {...pageProps} user={supabase.auth.user()} />
-              </Container>
-            </Center>
-          )}
+          <Header />
+          <Center>
+            <Container as={Stack} width="100vw" maxWidth="1260px">
+              <Component {...pageProps} />
+            </Container>
+          </Center>
           <Footer />
         </VStack>
       </ChakraProvider>
     </div>
-  );
-}
-
-function BurgerMenu() {
-  const Links = ["Dashboard", "Projects", "Team"];
-  const router = useRouter();
-
-  return (
-    <>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          variant="ghost"
-          icon={<HamburgerIcon />}
-          display={{ base: "inherit", md: "none" }}
-          transition="all 0.2s"
-          boxSize="67px"
-          mt={6}
-          mr={2}
-          _focus={{ boxShadow: "outline" }}
-        />
-        <MenuList>
-          <MenuItem onClick={(_) => router.push("/how-it-works")}>
-            How it works
-          </MenuItem>
-          <MenuItem onClick={(_) => router.push("/pricing")}>Pricing</MenuItem>
-          <MenuDivider />
-          <MenuItem onClick={(_) => router.push("/create")}>Start Now</MenuItem>
-          <MenuItem onClick={(_) => logout()}>Logout</MenuItem>
-        </MenuList>
-      </Menu>
-    </>
-  );
-}
-
-async function logout() {
-  const { error } = await supabase.auth.signOut();
-  if (error) console.log("Error logging out:", error.message);
-}
-
-function JDHeader({ user }) {
-  return (
-    <HStack justify="space-between" width="100vw" maxWidth="1260px">
-      <Logo />
-      <BurgerMenu />
-      <HStack spacing={5} pr={5} display={{ base: "none", md: "inherit" }}>
-        <Navbar />
-        {/* TODO: https://github.com/bijancn/justdecide/issues/32
-               Need login and logout button with login button opening a login modal */}
-        <JDLink href="/create">
-          <Button colorScheme="red" variant="solid">
-            Start now
-          </Button>
-        </JDLink>
-        <Button
-          onClick={async () => {
-            logout();
-          }}
-        >
-          {user ? "Logout" : "Login"}
-        </Button>
-      </HStack>
-    </HStack>
   );
 }
 

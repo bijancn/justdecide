@@ -4,27 +4,26 @@ import {
   Container,
   FormControl,
   FormErrorMessage,
-  Heading,
   Input,
 } from "@chakra-ui/react";
+import { Auth } from "@supabase/ui";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
 import { addTopic } from "../lib/TopicsDao";
 import BigHeading from "./basics/BigHeading";
+import LoginModal from "./LoginModal";
 
-interface CreateTopicProps {
-  userId: string;
-}
-
-export default function CreateTopic(props: CreateTopicProps) {
+export default function CreateTopic() {
   const router = useRouter();
+  const { user } = Auth.useUser();
   return (
     <Container fontSize="2xl" textAlign="center">
+      <LoginModal user={user} />
       <Formik
         initialValues={{ topic: "" }}
         onSubmit={async (formValue, actions) => {
-          const topic = await addTopic(props.userId, formValue.topic);
+          const topic = await addTopic(user.id, formValue.topic);
           actions.setSubmitting(false);
           router.push(`/decisions/${encodeURIComponent(topic.id)}`);
         }}
