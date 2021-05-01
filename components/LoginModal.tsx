@@ -12,11 +12,7 @@ import { Auth } from "@supabase/ui";
 import React from "react";
 import { supabase } from "../lib/initSupabase";
 
-// const { user } = Auth.useUser();
-//  user={supabase.auth.user()}
-
 export default function LoginModal(props) {
-  console.log(props);
   if (props.user) {
     return <></>;
   } else {

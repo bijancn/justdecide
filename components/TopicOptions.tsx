@@ -11,10 +11,10 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { addOptions } from "../lib/OptionsDao";
 import { Topic, updateTopic } from "../lib/TopicsDao";
-import React from "react";
 import { DateTime } from "luxon";
 import SubmissionCongratsModal from "../components/SubmissionCongratsModal";
 import BigHeading from "./basics/BigHeading";
@@ -47,8 +47,14 @@ interface TopicOptionsProps {
 }
 
 export default function TopicOptions(props: TopicOptionsProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = React.useState(false);
   const { user } = Auth.useUser();
+  useEffect(() => {
+    console.log("debug", props.topic);
+    if (props.topic && props.topic.start_at) {
+      setIsOpen(true);
+    }
+  }, [props.topic]);
   return (
     <Container fontSize="2xl" textAlign="center">
       <LoginModal user={user} />
@@ -118,7 +124,7 @@ export default function TopicOptions(props: TopicOptionsProps) {
                   colorScheme="red"
                   isLoading={props.isSubmitting}
                   type="submit"
-                  onClick={onOpen}
+                  onClick={(_) => setIsOpen(true)}
                 >
                   Publish
                 </Button>

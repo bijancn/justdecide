@@ -14,7 +14,7 @@ export default function IndexPage({ user }) {
     title: "",
     created_at: "",
     author: "",
-    started_at: "",
+    start_at: "",
     end_at: "",
   });
   const [options, setOptions] = useState([]);

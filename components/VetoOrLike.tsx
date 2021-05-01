@@ -115,7 +115,6 @@ export default function VetoOrLike({ topic, options }) {
   const [vetoes, setVetoes] = React.useState(options.map((o) => false));
   const [isOpen, setIsOpen] = React.useState(false);
   const { user } = Auth.useUser();
-  console.log("vetoes", vetoes, "likeValues", likeValues);
 
   return (
     <>
