@@ -50,7 +50,7 @@ export default function LandingPage() {
             internet. Their famous mantra goes like this:
           </GrayTextBox>
           <WithLargeQuote />
-          <GrayTextBox>
+          <GrayTextBox pt="4">
             Thus, the so-called
             <chakra.span fontStyle="italic" color="gray.800">
               {" "}
