@@ -6,7 +6,7 @@ export interface Topic {
   id: number;
   created_at: string;
   author: string;
-  started_at: string;
+  start_at: string;
   end_at: string;
 }
 

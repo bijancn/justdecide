@@ -11,7 +11,7 @@ const TopicDetailPage = (props) => {
     title: "",
     created_at: "",
     author: "",
-    started_at: "",
+    start_at: "",
     end_at: "",
   });
   useEffect(() => {
