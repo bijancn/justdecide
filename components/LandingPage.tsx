@@ -25,14 +25,19 @@ export default function LandingPage() {
             diverse perspectives of a group.
           </GrayTextBox>
         </Box>
-        <LinkedButton
-          href="/create"
-          fontSize={{ base: "18px", sm: "26px" }}
-          py={{ base: "18px", sm: "26px" }}
-          px={{ base: "18px", sm: "26px" }}
-        >
-          Start now for free
-        </LinkedButton>
+        <VStack>
+          <LinkedButton
+            href="/create"
+            fontSize={{ base: "18px", sm: "26px" }}
+            py={{ base: "18px", sm: "26px" }}
+            px={{ base: "18px", sm: "26px" }}
+          >
+            Start now for free
+          </LinkedButton>
+          <GrayTextBox fontSize="md">
+            Basic usage will be free forever. No strings attached.
+          </GrayTextBox>
+        </VStack>
         <Box>
           <BigHeading>
             Better decisions. <TextHighlight>Faster</TextHighlight>.
@@ -40,9 +45,24 @@ export default function LandingPage() {
           <GrayTextBox pt="4">
             Start using the principles of the Internet Engineering Task Force
             (IETF) as specified in <Code background="none">RFC-7282</Code> in
-            your group today.
+            your group today. The IETF has a long history of providing practical
+            solutions and has build many of the foundations of the modern
+            internet. Their famous mantra goes like this:
           </GrayTextBox>
           <WithLargeQuote />
+          <GrayTextBox>
+            Thus, the so-called
+            <chakra.span fontStyle="italic" color="gray.800">
+              {" "}
+              rough consensus{" "}
+            </chakra.span>
+            stands for neither a centralized decision-making nor a democratic
+            one. Instead, anyone in the group can veto options that she
+            considers a no-go. Furthermore, decisions are rarely black or white,
+            which is why you are supplied a slider to express your excitement (
+            <Code background="none">RFC-7282</Code> mentions humming for this
+            purpose).
+          </GrayTextBox>
         </Box>
       </VStack>
     </>
