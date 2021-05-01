@@ -25,7 +25,7 @@ const TopicDetailPage = (props) => {
   }, [router.isReady]);
   return (
     <>
-      <TopicOptions topic={topic} userId={props.user.id} />
+      <TopicOptions topic={topic} />
     </>
   );
 };

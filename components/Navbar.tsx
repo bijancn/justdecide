@@ -25,18 +25,14 @@ export default function Navbar() {
     <Stack direction={"row"} spacing={4}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <JDLink
-                p={5}
-                href={navItem.href ?? "#"}
-                color="gray.600"
-                _hover={{ color: "#e53e3e" }}
-              >
-                {navItem.label}
-              </JDLink>
-            </PopoverTrigger>
-          </Popover>
+          <JDLink
+            p={5}
+            href={navItem.href ?? "#"}
+            color="gray.600"
+            _hover={{ color: "#e53e3e" }}
+          >
+            {navItem.label}
+          </JDLink>
         </Box>
       ))}
     </Stack>
