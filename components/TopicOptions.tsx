@@ -50,7 +50,6 @@ export default function TopicOptions(props: TopicOptionsProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const { user } = Auth.useUser();
   useEffect(() => {
-    console.log("debug", props.topic);
     if (props.topic && props.topic.start_at) {
       setIsOpen(true);
     }

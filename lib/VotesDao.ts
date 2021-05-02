@@ -6,6 +6,7 @@ const TABLE = "votes";
 
 export async function insertVote(
   author: string,
+  topicId: number,
   optionId: number,
   likeValue: number,
   isVetoed: boolean
@@ -14,6 +15,7 @@ export async function insertVote(
     .from(TABLE)
     .insert({
       option_id: optionId,
+      topic_id: topicId,
       like_value: likeValue,
       is_vetoed: isVetoed,
       author: author,
@@ -22,13 +24,17 @@ export async function insertVote(
   return handleError(result, error);
 }
 
-export async function selectVotesOfOption(
-  optionId: number
-): Promise<Array<Vote>> {
+export async function selectVotesOfTopic(id: number): Promise<Array<Vote>> {
   let { data: result, error } = await supabase
     .from(TABLE)
     .select("*")
-    .eq("option_id", optionId);
-  if (error) console.log("error", error);
-  else return result;
+    .eq("topic_id", id);
+  if (error) {
+    console.log("error", error);
+    return [];
+  } else if (result) return result;
+  else {
+    console.log("this shouldnt happen", error);
+    return [];
+  }
 }
