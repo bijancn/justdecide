@@ -4,7 +4,7 @@ interface UserOption {
   title: string;
 }
 
-interface Option {
+export interface Option {
   title: string;
   id: number;
   topic_id: number;

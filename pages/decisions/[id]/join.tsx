@@ -32,6 +32,18 @@ export default function IndexPage({ user }) {
     fetchData();
   }, [router.isReady]);
   return (
-    <>{options ? <VetoOrLike topic={topic} options={options} /> : "Loading"}</>
+    <>
+      {options ? (
+        <VetoOrLike
+          topic={topic}
+          options={options}
+          title="Just decide on"
+          likeTitle="How do you like it?"
+          vetoTitle="Veto this?"
+        />
+      ) : (
+        "Loading"
+      )}
+    </>
   );
 }
