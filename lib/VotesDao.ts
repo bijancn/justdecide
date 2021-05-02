@@ -1,17 +1,6 @@
 import { handleError } from "./errorHandler";
 import { supabase } from "./initSupabase";
-
-export interface Vote {
-  // Meta
-  id: number;
-  created_at: string;
-  author: string;
-
-  // Input
-  option_id: number;
-  like_value: number;
-  is_vetoed: boolean;
-}
+import { Vote } from "./Vote";
 
 const TABLE = "votes";
 
