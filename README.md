@@ -1,40 +1,14 @@
-# Todo example using Supabase
+# JustDecide
+
+JustDecide is a simple, fast and fun decision-making tool for groups of equals. It combines the fast pace of centralized decision making with the diverse perspectives of a group. Try it at https://justdecide.io
+
+## Tech-Stack
 
 - Frontend:
   - [Next.js](https://github.com/vercel/next.js) - a React framework for production.
   - [Supabase.js](https://supabase.io/docs/library/getting-started) for user management and realtime data syncing.
 - Backend:
   - [app.supabase.io](https://app.supabase.io/): hosted Postgres database with restful API for usage with Supabase.js.
-
-## Demo
-
-- Live demo: https://justdecide.io
-
-## Deploy with Vercel
-
-The Vercel deployment will guide you through creating a Supabase account and project. After installation of the Supabase integration, all relevant environment variables will be set up so that the project is usable immediately after deployment 🚀
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsupabase%2Fsupabase%2Ftree%2Fmaster%2Fexamples%2Fnextjs-todo-list&project-name=supabase-todo-list&repository-name=supabase-todo-list&demo-title=Todo%20list&demo-description=An%20example%20web%20app%20using%20Supabase%20and%20Next.js&demo-url=https%3A%2F%2Fsupabase-nextjs-todo-list.vercel.app&demo-image=https%3A%2F%2Fi.imgur.com%2FGJauPlN.png&integration-ids=oac_jUduyjQgOyzev1fjrW83NYOv&external-id=supabase-todo-list)
-
-## Build from scratch
-
-### 1. Create new project
-
-Sign up to Supabase - [https://app.supabase.io](https://app.supabase.io) and create a new project. Wait for your database to start.
-
-### 2. Run "Todo List" Quickstart
-
-Once your database has started, run the "Todo List" quickstart. Inside of your project, enter the `SQL editor` tab and scroll down until you see `TODO LIST: Build a basic todo list with Row Level Security`.
-
-### 3. Get the URL and Key
-
-Go to the Project Settings (the cog icon), open the API tab, and find your API URL and `anon` key, you'll need these in the next step.
-
-The `anon` key is your client-side API key. It allows "anonymous access" to your database, until the user has logged in. Once they have logged in, the keys will switch to the user's own login token. This enables row level security for your data. Read more about this [below](#postgres-row-level-security).
-
-![image](https://user-images.githubusercontent.com/10214025/88916245-528c2680-d298-11ea-8a71-708f93e1ce4f.png)
-
-**_NOTE_**: The `service_role` key has full access to your data, bypassing any security policies. These keys have to be kept secret and are meant to be used in server environments and never on a client or browser.
 
 ## Supabase details
 
@@ -70,9 +44,3 @@ create policy "Individuals can update their own todos." on todos for
 create policy "Individuals can delete their own todos." on todos for
     delete using (auth.uid() = user_id);
 ```
-
-## Authors
-
-- [Supabase](https://supabase.io)
-
-Supabase is open source. We'd love for you to follow along and get involved at https://github.com/supabase/supabase
