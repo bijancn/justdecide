@@ -54,8 +54,8 @@ function Usecases() {
       </Stack>
 
       <Container maxW={"6xl"} mt={10}>
-        <SimpleGrid columns="2">
-          <SimpleGrid columns="1" spacing={10}>
+        <SimpleGrid columns={2}>
+          <SimpleGrid columns={1} spacing={10}>
             <Text
               fontSize={{ base: "30px" }}
               fontWeight="800"
@@ -65,7 +65,7 @@ function Usecases() {
             </Text>
             {FeatureList(featuresPrivate)}
           </SimpleGrid>
-          <SimpleGrid columns="1" spacing={10}>
+          <SimpleGrid columns={1} spacing={10}>
             <Text
               fontSize={{ base: "30px" }}
               fontWeight="800"
@@ -137,7 +137,7 @@ function JustDecideForTeams() {
       <BigHeading>
         JustDecide for <TextHighlight>Teams</TextHighlight>.
       </BigHeading>
-      <GrayTextBox pt="4">
+      <GrayTextBox pt={4}>
         Traditionally, the boss was responsible to make decisions for the team
         and he would take the blame for bad decisions and the glory for the
         successful ones. In modern companies, individual contributors are
@@ -145,7 +145,7 @@ function JustDecideForTeams() {
         allows them to move more quickly. However, they rarely work alone and
         their decisions sometimes affect the whole team.{" "}
       </GrayTextBox>
-      <GrayTextBox pt="4">
+      <GrayTextBox pt={4}>
         The conflicts arising from this are tackled differently: Some try to get
         input from everyone beforehand to reach consensus in the whole group.
         However, in groups of more than five people, there are often too many
