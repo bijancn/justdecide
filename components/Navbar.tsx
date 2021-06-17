@@ -10,10 +10,10 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "How it works",
-    href: "/how-it-works",
-  },
+  // {
+  //   label: "How it works",
+  //   href: "/how-it-works",
+  // },
   {
     label: "Pricing",
     href: "/pricing",

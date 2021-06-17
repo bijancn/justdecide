@@ -6,10 +6,10 @@ export default function GrayTextBox(props) {
     <Center>
       <Container
         fontSize="xl"
-        textAlign="center"
+        textAlign="left"
         color="gray.500"
         {...props}
-        maxWidth="2xl"
+        maxWidth="3xl"
       >
         {props.children}
       </Container>

@@ -32,9 +32,9 @@ function BurgerMenu() {
           _focus={{ boxShadow: "outline" }}
         />
         <MenuList>
-          <MenuItem onClick={(_) => router.push("/how-it-works")}>
+          {/* <MenuItem onClick={(_) => router.push("/how-it-works")}>
             How it works
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem onClick={(_) => router.push("/pricing")}>Pricing</MenuItem>
           <MenuDivider />
           <MenuItem onClick={(_) => router.push("/create")}>Start Now</MenuItem>
