@@ -69,9 +69,25 @@ describe("Vote Counting", function () {
           [100, false, "b", 2],
         ])
       ).to.deep.equal([
-        [20, false, 0],
         [100, false, 1],
         [50, false, 2],
+        [20, false, 0],
+      ]);
+      expect(
+        sum([
+          [10, false, "a", 0],
+          [100, false, "a", 1],
+          [100, true, "b", 1],
+          [100, false, "c", 1],
+          [20, false, "b", 0],
+          [30, false, "c", 0],
+          [0, false, "a", 2],
+          [100, false, "b", 2],
+        ])
+      ).to.deep.equal([
+        [50, false, 2],
+        [20, false, 0],
+        [100, true, 1],
       ]);
     });
   });

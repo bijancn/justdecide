@@ -7,6 +7,7 @@ import { fetchTopic } from "../../../lib/TopicsDao";
 import { fetchOptionsOfTopic } from "../../../lib/OptionsDao";
 import { selectVotesOfTopic } from "../../../lib/VotesDao";
 import { sumVotes } from "../../../lib/Vote";
+import _ from "lodash";
 
 export default function IndexPage() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function IndexPage() {
     start_at: "",
     end_at: "",
   });
+  const [votes, setVotes] = useState([]);
   const [options, setOptions] = useState([]);
   const [voteResults, setVoteResults] = useState([]);
   useEffect(() => {
@@ -33,6 +35,7 @@ export default function IndexPage() {
       setTopic(topic);
       setOptions(options);
       const result = sumVotes(votes);
+      setVotes(votes);
       setVoteResults(result);
     };
 
@@ -47,6 +50,7 @@ export default function IndexPage() {
         title="And the result for"
         likeTitle="We like it this much"
         vetoTitle="Vetoed"
+        numberOfVotes={Object.values(_.groupBy(votes, (x) => x.author)).length}
       />
     </>
   );

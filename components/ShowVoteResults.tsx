@@ -1,6 +1,7 @@
 import { Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { VoteResult } from "../lib/Vote";
+import GrayTextBox from "./basics/GrayTextBox";
 import { VoteHeading } from "./VoteHeading";
 import { VoteRow } from "./VoteRow";
 
@@ -11,6 +12,7 @@ interface Props {
   title;
   likeTitle;
   vetoTitle;
+  numberOfVotes;
 }
 
 export default function ShowVoteResults(p: Props) {
@@ -28,7 +30,7 @@ export default function ShowVoteResults(p: Props) {
         {p.voteResults.map((result, i) => {
           return (
             <VoteRow
-              index={result.option_id}
+              index={i}
               isVetoed={result.is_vetoed}
               likeValue={result.like_value}
               readOnly={true}
@@ -41,6 +43,7 @@ export default function ShowVoteResults(p: Props) {
           );
         })}
       </SimpleGrid>
+      <GrayTextBox>{p.numberOfVotes} people have contributed.</GrayTextBox>
     </VStack>
   );
 }

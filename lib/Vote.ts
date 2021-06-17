@@ -21,7 +21,18 @@ export interface VoteResult {
 export function sumVotes(votes: Array<Vote>): Array<VoteResult> {
   const grouped = _.groupBy(votes, (x) => x.option_id);
   const result = Object.values(grouped).map((x) => sumVotesOfOneOption(x));
-  return result;
+  const resultSorted = result.sort((a, b) => {
+    if (a.is_vetoed != b.is_vetoed) {
+      if (a.is_vetoed) {
+        return 1;
+      } else {
+        return -1;
+      }
+    } else {
+      return b.like_value - a.like_value;
+    }
+  });
+  return resultSorted;
 }
 
 function sumVotesOfOneOption(votes: Array<Vote>): VoteResult {
