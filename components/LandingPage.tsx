@@ -54,17 +54,17 @@ function Usecases() {
       </Stack>
       <Container mt={10}>
         <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={10}>
-          <SimpleGrid columns={1} spacing={10}>
-            <Text fontSize={{ base: "30px" }} fontWeight="800">
-              Private
-            </Text>
-            {FeatureList(featuresPrivate)}
-          </SimpleGrid>
-          <SimpleGrid columns={1} spacing={10}>
+          <SimpleGrid columns={1} spacing={4}>
             <Text fontSize={{ base: "30px" }} fontWeight="800">
               Professional
             </Text>
             {FeatureList(featuresProfessional)}
+          </SimpleGrid>
+          <SimpleGrid columns={1} spacing={4}>
+            <Text fontSize={{ base: "30px" }} fontWeight="800">
+              Private
+            </Text>
+            {FeatureList(featuresPrivate)}
           </SimpleGrid>
         </SimpleGrid>
       </Container>
@@ -99,12 +99,14 @@ export default function LandingPage() {
             </GrayTextBox>
           </VStack>
           <GrayTextBox pt={4}>
-            So how does it work? Imagine you want to go for lunch. Your friend
-            Alice really wants to eat pizza but your other friend Bob is gluten
-            intolerant, so that's a no-go for him. Of course, you don't want Bob
-            to become sick, so you respect his veto. In the end, you go to the
-            Thai place. It's not the favorite option for anyone but it's viable
-            for everyone. JustDecide works exactly the same.{" "}
+            So,
+            <chakra.span color="gray.800"> how does it work</chakra.span>?
+            Imagine you want to go for lunch. Your friend Alice really wants to
+            eat pizza but your other friend Bob is gluten intolerant, so that's
+            a no-go for him. Of course, you don't want Bob to become sick, so
+            you respect his veto. In the end, you go to the canteen. It's not
+            the favorite option for anyone but it's viable for everyone.
+            JustDecide works exactly the same.
           </GrayTextBox>
           <GrayTextBox>
             You can veto show-stoppers and show your dislike or love on a
