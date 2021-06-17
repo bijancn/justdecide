@@ -42,8 +42,8 @@ function FeatureList(features) {
 
 function Usecases() {
   return (
-    <Box p={4}>
-      <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
+    <Box py={4}>
+      <Stack spacing={4}>
         <BigHeading>
           Possible <TextHighlight>Applications</TextHighlight>.
         </BigHeading>
@@ -52,25 +52,16 @@ function Usecases() {
           some inspiration, here are a couple of ideas:
         </GrayTextBox>
       </Stack>
-
-      <Container maxW={"6xl"} mt={10}>
-        <SimpleGrid columns={2}>
+      <Container mt={10}>
+        <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={10}>
           <SimpleGrid columns={1} spacing={10}>
-            <Text
-              fontSize={{ base: "30px" }}
-              fontWeight="800"
-              // textAlign="center"
-            >
+            <Text fontSize={{ base: "30px" }} fontWeight="800">
               Private
             </Text>
             {FeatureList(featuresPrivate)}
           </SimpleGrid>
           <SimpleGrid columns={1} spacing={10}>
-            <Text
-              fontSize={{ base: "30px" }}
-              fontWeight="800"
-              // textAlign="center"
-            >
+            <Text fontSize={{ base: "30px" }} fontWeight="800">
               Professional
             </Text>
             {FeatureList(featuresProfessional)}
