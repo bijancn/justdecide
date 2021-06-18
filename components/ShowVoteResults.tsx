@@ -16,6 +16,7 @@ interface Props {
 }
 
 export default function ShowVoteResults(p: Props) {
+  let options = new Map(p.options.map((i) => [i.id, i.title]));
   return (
     <VStack spacing={14}>
       <Heading fontSize={{ base: "2xl", md: "4xl" }} mt={10}>
@@ -38,7 +39,7 @@ export default function ShowVoteResults(p: Props) {
               setVetoed={(_) => void 0}
               defaultChecked={result.is_vetoed}
             >
-              {p.options[i].title}
+              {options.get(result.option_id)}
             </VoteRow>
           );
         })}
